@@ -1,7 +1,8 @@
 # test-ember-resources
 
-This README outlines the details of collaborating on this Ember application.
-A short introduction of this app could easily go here.
+A very contrived example of using the ember-resources `trackedFunction`.
+
+The application route contains the logic, just navigating the http://localhost:4200 after serving the app should explain the situation as there's a short write up there.
 
 ## Prerequisites
 

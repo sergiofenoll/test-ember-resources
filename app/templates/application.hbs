@@ -1,7 +1,42 @@
 {{page-title "TestEmberResources"}}
 
-{{!-- The following component displays Ember's default welcome message. --}}
-<WelcomePage />
-{{!-- Feel free to remove this! --}}
+<p>
+  Select <code>Genres</code> from the below selector and look at your console output.
+  First call results in <code>null</code> being printed immediately, but I would expect it to print <code>Fantasy, Sci-fi</code> after a second.
+</p>
+<p>
+  After interacting with the selectors again after a second has passed (by clearing the first selector or by selecting a genre and de-selecting it), the expected results are printed.
+</p>
+<p>
+  A possible solution here would be to ensure that <code>allGenres</code> is loaded before rendering the selector. But this doesn't seem great to me, because a user doesn't necessarily have to select the <code>Genres</code> option. We would be blocking the rendering while waiting for data to arrive, whereas we could already be rendering stuff and only waiting inside the action.
+</p>
 
-{{outlet}}
+<PowerSelect
+  @options={{this.filters}}
+  @selected={{this.selectedFilter}}
+  @onChange={{this.updateSelectedFilter}}
+  @allowClear={{true}}
+  as |filter|
+>
+  {{filter}}
+</PowerSelect>
+
+{{#if (eq this.selectedFilter "Authors")}}
+  <PowerSelectMultiple
+    @options={{this.allAuthors}}
+    @selected={{this.authors}}
+    @onChange={{this.updateSelectedAuthors}}
+    as |author|
+  >
+    {{author}}
+  </PowerSelectMultiple>
+{{else if (eq this.selectedFilter "Genres")}}
+  <PowerSelectMultiple
+    @options={{this.allGenres.value}}
+    @selected={{this.genres}}
+    @onChange={{this.updateSelectedGenres}}
+    as |genre|
+  >
+    {{genre}}
+  </PowerSelectMultiple>
+{{/if}}
